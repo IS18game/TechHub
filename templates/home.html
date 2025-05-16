@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div class="logo">Tech<span>Hub</span></div>
+        <div class="header-contacts">
+          <div class="header-worktime">Пн-Пт: 9:00-18:00</div>
+        </div>
+      </div>
+      <div class="header-bottom">
+        <form class="search-form">
+          <input type="text" class="search-input" placeholder="Поиск товаров...">
+          <button type="submit" class="search-button">Найти</button>
+        </form>
+        <div class="header-icons">
+          <a href="/register" class="header-icon">
+            <span>🔒</span>
+            <span>Вход</span>
+          </a>
+          <a href="/cart" class="header-icon">
+            <span>🛒</span>
+            <span>Корзина</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+<nav class="nav">
+  <div class="container">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#" class="nav-link">Компьютеры</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Ноутбуки</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Комплектующие</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Периферия</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <main class="container">
+
+    <section class="main-banner">
+      <div class="banner-content">
+        <h1 class="banner-title">Новая коллекция игровых ноутбуков</h1>
+        <p class="banner-text">Мощные процессоры, современные видеокарты и высокая производительность</p>
+        <a href="#" class="banner-button">Подробнее</a>
+      </div>
+    </section>
+
+    <section class="categories">
+      <h2 class="section-title">Категории товаров</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <div class="category-image">💻</div>
+          <div class="category-name">Ноутбуки</div>
+        </div>
+        <div class="category-card">
+          <div class="category-image">🖥️</div>
+          <div class="category-name">Компьютеры</div>
+        </div>
+        <div class="category-card">
+          <div class="category-image">🖱️</div>
+          <div class="category-name">Периферия</div>
+        </div>
+        <div class="category-card">
+          <div class="category-image">🧩</div>
+          <div class="category-name">Комплектующие</div>
+        </div>
+        <div class="category-card">
+          <div class="category-image">🖨️</div>
+          <div class="category-name">Офисная техника</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products">
+      <h2 class="section-title">Популярные товары</h2>
+      <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+          <div class="product-image">
+            {% if product.discount %}
+              <div class="product-discount">{{ product.discount }}</div>
+            {% endif %}
+            {{ product.image | safe }}
+          </div>
+          <div class="product-info">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-rating">{{ product.rating }}</div>
+            <div class="product-price">
+              <span class="current-price">{{ product.current_price }}</span>
+              {% if product.old_price %}
+                <span class="old-price">{{ product.old_price }}</span>
+              {% endif %}
+            </div>
+            <form action="/add_to_cart" method="post">
+              <input type="hidden" name="product_id" value="{{ product.id }}">
+              <button class="product-button" type="submit">В корзину</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3 class="footer-title">Компания</h3>
+          <ul class="footer-links">
+            <li><a href="/about" class="footer-link">О нас</a></li>
+            <li><a href="/contacts" class="footer-link">Контакты</a></li>
+            <li><a href="/vacancies" class="footer-link">Вакансии</a></li>
+            <li><a href="/news" class="footer-link">Новости</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-title">Помощь</h3>
+          <ul class="footer-links">
+            <li><a href="/delivery" class="footer-link">Доставка и оплата</a></li>
+            <li><a href="/warranty" class="footer-link">Гарантия</a></li>
+            <li><a href="/returns" class="footer-link">Возврат товара</a></li>
+            <li><a href="/faq" class="footer-link">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-title">Покупателям</h3>
+          <ul class="footer-links">
+            <li><a href="/bonus" class="footer-link">Бонусная программа</a></li>
+            <li><a href="/credit" class="footer-link">Кредит</a></li>
+            <li><a href="/installment" class="footer-link">Рассрочка</a></li>
+            <li><a href="/discounts" class="footer-link">Скидки</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-title">Контакты</h3>
+          <ul class="footer-links">
+            <li>8 (800) 123-45-67</li>
+            <li>info@techstore.ru</li>
+            <li>Москва, ул. Примерная, 123</li>
+            <li>Пн-Пт: 9:00-18:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 TechHub. Все права защищены.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
