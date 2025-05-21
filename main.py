@@ -28,44 +28,6 @@ async def add_session(request: Request, call_next):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    products = [
-        {
-            "id": 1,
-            "name": "Игровой компьютер ASUS ROG Strix G15",
-            "current_price": "89 990 ₽",
-            "old_price": "105 990 ₽",
-            "discount": "-15%",
-            "rating": "★★★★★",
-            "image": "🖥️"
-        },
-        {
-            "id": 2,
-            "name": "Ноутбук Lenovo IdeaPad 5 15ITL05",
-            "current_price": "54 990 ₽",
-            "old_price": None,
-            "discount": None,
-            "rating": "★★★★☆",
-            "image": "💻"
-        },
-        {
-            "id": 3,
-            "name": "Игровая мышь Razer DeathAdder V2",
-            "current_price": "4 990 ₽",
-            "old_price": "5 490 ₽",
-            "discount": "-10%",
-            "rating": "★★★★★",
-            "image": "🎮"
-        },
-        {
-            "id": 4,
-            "name": "Монитор Samsung Odyssey G5 27\"",
-            "current_price": "32 990 ₽",
-            "old_price": None,
-            "discount": None,
-            "rating": "★★★★☆",
-            "image": "🖥️"
-        }
-    ]
     return templates.TemplateResponse("home.html", {"request": request, "products": products})
 
 @app.post("/add_to_cart")
@@ -91,14 +53,6 @@ async def remove_from_cart(request: Request, product_id: int = Form(...)):
 async def cart(request: Request):
     session_token = request.cookies.get("session_token")
     cart_items = sessions.get(session_token, {}).get("cart", [])
-    
-    products_catalog = {
-        1: {"name": "Игровой компьютер ASUS ROG Strix G15", "price": "89 990 ₽"},
-        2: {"name": "Ноутбук Lenovo IdeaPad 5 15ITL05", "price": "54 990 ₽"},
-        3: {"name": "Игровая мышь Razer DeathAdder V2", "price": "4 990 ₽"},
-        4: {"name": "Монитор Samsung Odyssey G5 27\"", "price": "32 990 ₽"}
-    }
-    
     cart_products = [{"id": pid, **products_catalog[pid]} for pid in cart_items if pid in products_catalog]
     return templates.TemplateResponse("cart.html", {"request": request, "cart_products": cart_products})
 
@@ -125,13 +79,3 @@ page_titles = {
 async def under_construction(request: Request, page_name: str):
     title = page_titles.get(page_name, "Страница в разработке")
     return templates.TemplateResponse("under_construction.html", {"request": request, "title": title})
-
-@app.get("/register", response_class=HTMLResponse)
-async def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
-
-from fastapi import Form
-
-@app.post("/register", response_class=HTMLResponse)
-async def register_user(request: Request, username: str = Form(...), password: str = Form(...)):
-    return templates.TemplateResponse("register_success.html", {"request": request, "username": username})
