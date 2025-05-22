@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 import os
 
-DATABASE_URL = "postgresql://postgres:[YOUR-PASSWORD]@db.hcngokfrfzaefaepqkux.supabase.co:5432/postgres"
+DATABASE_URL = engine = 'postgresql://postgres:vismin-Vutna1-fugfad@db.hcngokfrfzaefaepqkux.supabase.co:5432/postgres'
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
