@@ -9,7 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Make the script executable
 RUN chmod +x wait-for-db.sh
 
-CMD ["./wait-for-db.sh", "db", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8002", "--reload"] 
+ENTRYPOINT ["./wait-for-db.sh"]
+
+CMD ["db", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8002", "--reload"] 
