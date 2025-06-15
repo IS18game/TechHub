@@ -1,0 +1,7 @@
+{
+  "name": "techhub-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
