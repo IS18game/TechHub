@@ -10,9 +10,8 @@ export default defineConfig({
     react(),
     legacy()
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+  server: {
+    host: true,
+    port: 5173,
   }
 })
